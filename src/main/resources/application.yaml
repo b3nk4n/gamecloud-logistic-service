@@ -3,3 +3,6 @@ server:
 spring:
   application:
     name: logistic-service
+  cloud:
+    function:
+      definition: packaging|labeling
