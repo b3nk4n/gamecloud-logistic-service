@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logistic-service
+  labels:
+    app: logistic-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logistic-service
+  template:
+    metadata:
+      labels:
+        app: logistic-service
+    spec:
+      containers:
+        - name: logistic-service
+          image: gamecloud-logistic-service
+          imagePullPolicy: IfNotPresent
+          lifecycle:
+            preStop:
+              exec:
+                # Delay SIGTERM signal to Pod, so that K8s has enough time to inform other components. To ensure that e.g. the
+                # service registry is updated, no requests are forward to the terminating pod anymore due to race condition.
+                command: [ "sh", "-c", "sleep 3" ]
+          ports:
+            - containerPort: 9003
+          env:
+            - name: BPL_JVM_THREAD_COUNT
+              value: "50"
