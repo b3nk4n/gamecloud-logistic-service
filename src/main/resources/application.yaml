@@ -6,9 +6,9 @@ spring:
     name: logistic-service
   lifecycle:
     timeout-per-shutdown-phase: 20s
+  config:
+    import: "optional:configserver:"
   cloud:
-    config:
-      import: "optional:configserver:"
     function:
       definition: packaging|labeling
     stream:
