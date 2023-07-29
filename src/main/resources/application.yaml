@@ -6,3 +6,16 @@ spring:
   cloud:
     function:
       definition: packaging|labeling
+    stream:
+      bindings:
+        packaginglabeling-in-0: # Note: only Spring Cloud Functions is aware of this identifier, but not RabbitMQ
+          destination: order-accepted # The actual name of the exchange in RabbitMQ
+          group: ${spring.application.name} # Consumer group
+        packaginglabeling-out-0: # Note: only Spring Cloud Functions is aware of this identifier, but not RabbitMQ
+          destination: order-dispatched # The actual name of the exchange in RabbitMQ
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+    connection-timeout: 3s
