@@ -1,9 +1,14 @@
 server:
   port: 9003
+  shutdown: graceful
 spring:
   application:
     name: logistic-service
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
   cloud:
+    config:
+      import: "optional:configserver:"
     function:
       definition: packaging|labeling
     stream:
